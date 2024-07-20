@@ -32,7 +32,7 @@ For a full list of available security context settings, see the Kubernetes API r
 - [PodSecurityContext v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#podsecuritycontext-v1-core)
 
 
-## Gettings hands-on
+## Hands-on
 
 ### Create a pod to playaround
 
