@@ -26,7 +26,7 @@ spec:
 ```
 
 > [!NOTE]
-> `Pod-level` and `Container-level` security context have common settings (e.g: `runAsUser`) but they can also have different settings that only applies to that specific level.
+> `Pod-level` and `Container-level` security context have common settings (e.g: `runAsUser`) but they can also have settings that only applies to that specific level.
 
 For a full list of available security context settings, see the Kubernetes API reference:
 - [PodSecurityContext v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#podsecuritycontext-v1-core)
