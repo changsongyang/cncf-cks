@@ -4,7 +4,7 @@
 
 A **security context** defines privileges and access control settings for a Pod or Container.
 
-## Configuring security context
+## Configuring a security context
 
 ```diff
 apiVersion: v1
@@ -28,10 +28,7 @@ spec:
 > [!NOTE]
 > `Pod-level` and `Container-level` security context have common settings (e.g: `runAsUser`) but they can also have different settings that only applies to that specific level.
 
-**Additional resources:**
-- [Kubernetes Documentation: Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
-
-## Hands-on
+## Gettings hands-on
 
 ### Create a pod to playaround
 
@@ -150,3 +147,7 @@ $ crictl inspect $CONTAINER_ID | grep no_new_privs
 +          "no_new_privs": true,
 root@k8s-0:~#
 ```
+
+
+## Additional resources
+- [Kubernetes Documentation: Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
