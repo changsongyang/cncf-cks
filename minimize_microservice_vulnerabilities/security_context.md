@@ -88,7 +88,6 @@ spec:
     - sleep 3600
     image: busybox
     name: sc-pod
-status: {}
 ```
 
 ```sh
