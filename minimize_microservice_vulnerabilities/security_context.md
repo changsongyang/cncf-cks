@@ -19,7 +19,7 @@ spec:
   containers:
   - name: nginx
     image: nginx
-# Container-level: Only applies to this container
+# Container-level: Only applies to this container (pod-level override)
 +    securityContext:
 +      runAsUser: 2000
 +      # more settings as key:value pair
