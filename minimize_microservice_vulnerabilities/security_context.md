@@ -182,6 +182,34 @@ $ crictl inspect $CONTAINER_ID | grep no_new_privs
 root@k8s-0:~#
 ```
 
+### Privileged container
+
+A privileged container is a container that runs as root user, and is directly mapped to host machine root user.
+
+>[!Note]
+>By default, containers do not as priviledge mode.
+
+>[!CAUTION]
+>Be careful when running container as privileged, as it can compromise the cluster.
+
+```diff
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: sc-pod
+  name: sc-pod
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - sleep 3600
+    image: busybox
+    name: sc-pod
++   securityContext:
++     privileged: true
+```
 
 ## Additional resources
 - [Kubernetes Documentation: Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
