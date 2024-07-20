@@ -74,6 +74,38 @@ $ kubectl exec sc-pod -- id
 uid=0(root) gid=0(root) groups=0(root),10(wheel)
 ```
 
+### Avoid running as root even if container image sets root user
+
+```diff
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: sc-pod
+  name: sc-pod
+spec:
+  containers:
+  - command:
+    - sh
+    - -c
+    - sleep 3600
+    image: busybox
+    name: sc-pod
++   securityContext:
++     runAsNonRoot: true
+```
+
+```sh
+$ kubectl replace -f sc-pod.yaml --force
+pod "sc-pod" deleted
+pod/sc-pod replaced
+
+$ kubectl describe pod -l run=sc-pod | grep -i error
+      Reason:       CreateContainerConfigError
+  Warning  Failed   17s (x3 over 34s)  kubelet  Error: container has runAsNonRoot and image will run as root (pod: "sc-pod_default(7d407586-3695-4f30-979e
+-ad884f548b19)", container: sc-pod)
+```
+
 ### Run pod with uid `5000`
 ```diff
 apiVersion: v1
@@ -120,7 +152,6 @@ Is always `true` when container:
 apiVersion: v1
 kind: Pod
 metadata:
-  creationTimestamp: null
   labels:
     run: sc-pod
   name: sc-pod
