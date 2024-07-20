@@ -1,8 +1,6 @@
 # Minimize Microservice Vulnerabilities
 
-## Topics
-
-| Name | Learn |
+| Topic | About |
 |--------|--------|
 | [Security contexts](security_context.md) | Learn about **security settings available through Pod and Containers** security contexts. |
 | PodSecurityPolicy (PSP) | Learn about **enforcing secure Pod configuration** with PSP. |
