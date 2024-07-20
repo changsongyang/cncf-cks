@@ -106,7 +106,7 @@ $ kubectl describe pod -l run=sc-pod | grep -i error
 -ad884f548b19)", container: sc-pod)
 ```
 
-### Run container as non-root (i.e, uid > 0)
+### Run a container as non-root (i.e, uid > 0)
 ```diff
 apiVersion: v1
 kind: Pod
@@ -115,8 +115,6 @@ metadata:
     run: sc-pod
   name: sc-pod
 spec:
-+ securityContext:
-+   runAsUser: 5000
   containers:
   - command:
     - sh
@@ -124,6 +122,8 @@ spec:
     - sleep 3600
     image: busybox
     name: sc-pod
++   securityContext:
++     runAsUser: 5000
 ```
 
 ```sh
