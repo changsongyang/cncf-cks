@@ -178,8 +178,7 @@ pod/sc-pod replaced
 $ kubectl get pods -l run=sc-pod -o wide
 $ CONTAINER_ID=$(crictl ps --name sc-pod -q)
 $ crictl inspect $CONTAINER_ID | grep no_new_privs
-+          "no_new_privs": true,
-root@k8s-0:~#
++         "no_new_privs": true,
 ```
 
 ### Privileged container
@@ -210,6 +209,19 @@ spec:
 +   securityContext:
 +     privileged: true
 ```
+
+```diff
+$ kubectl replace -f sc-pod.yaml --force
+pod "sc-pod" deleted
+pod/sc-pod replaced
+
+# On the node where container is running
+$ kubectl get pods -l run=sc-pod -o wide
+$ CONTAINER_ID=$(crictl ps --name sc-pod -q)
+$ crictl inspect $CONTAINER_ID | grep privileged
++         "privileged": true,
+```
+
 
 ## Additional resources
 - [Kubernetes Documentation: Configure a Security Context for a Pod or Container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
