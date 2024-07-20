@@ -1,4 +1,4 @@
-# 1. Security context
+# Security context
 
 ## What is a security context?
 
