@@ -61,7 +61,7 @@ spec:
 
 ```sh
 $ kubectl apply -f sc-pod.yaml
-$ kubectl get pods -l run=sc-pod -w
+$ kubectl get pods -l run=sc-pod
 ```
 
 ### By default, container runs as user set in container image
