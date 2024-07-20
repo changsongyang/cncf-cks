@@ -1,4 +1,4 @@
-# 5. Minimizing Microservice Vulnerabilities
+# Minimize Microservice Vulnerabilities
 
 ## Topics
 
