@@ -67,7 +67,7 @@ $ kubectl get pods -l run=sc-pod
 ### By default, container runs as user set in container image
 
 >[!WARNING]
-> Recommend: Always set user/group id greater than 0 (root UID is 0)
+> Always set user/group id greater than 0 (root UID is 0) for best container security practice.
 
 ```sh
 $ kubectl exec sc-pod -- id
