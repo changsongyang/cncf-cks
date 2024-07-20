@@ -4,7 +4,7 @@
 
 | Name | Learn |
 |--------|--------|
-| Security contexts | Learn about **security settings available through Pod and Containers** security contexts. |
+| [Security contexts](security_context.md) | Learn about **security settings available through Pod and Containers** security contexts. |
 | PodSecurityPolicy (PSP) | Learn about **enforcing secure Pod configuration** with PSP. |
 | OPA Gatekeeper | Learn to **enforce custom security policies on any object** with OPA gatekeeper. |
 | Secrets | Learn about how to **store sensitive data** with Secrets. |
