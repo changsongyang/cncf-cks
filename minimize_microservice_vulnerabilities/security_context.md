@@ -13,16 +13,16 @@ metadata:
   name: webserver
 spec:
 # Pod-level: Applies to all containers in this Pod.
-+    securityContext:
-+      runAsUser: 1000
-+      # more settings as key:value pair
++ securityContext:
++   runAsUser: 1000
++   # more settings as key:value pair
   containers:
   - name: nginx
     image: nginx
 # Container-level: Only applies to this container (pod-level override)
-+    securityContext:
-+      runAsUser: 2000
-+      # more settings as key:value pair
++ securityContext:
++   runAsUser: 2000
++   # more settings as key:value pair
 ```
 
 > [!NOTE]
@@ -79,8 +79,8 @@ metadata:
     run: sc-pod
   name: sc-pod
 spec:
-+  securityContext:
-+    runAsUser: 5000
++ securityContext:
++   runAsUser: 5000
   containers:
   - command:
     - sh
