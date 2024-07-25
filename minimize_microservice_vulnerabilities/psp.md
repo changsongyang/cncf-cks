@@ -24,3 +24,29 @@ Primary need for PSP is to prevent running insecure and misconfigured Pod in the
 >[!CAUTION]
 >Pod must satisfy atleast one PSP in order to be allowed. Otherwise, no Pods will be allowed to run.
 >
+
+```yaml
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: my-psp
+spec:
+  priviledged: false           # Can container run in priviledge mode?
+  runAsUser:                   # Can container run as as any user?
+    rule: RunAsAny
+```
+
+Additional, a user must be authorized to use Pod Security Policy via RBAC.
+
+```yaml
+apiVersion:
+kind: ClusterRole
+metadata:
+  name: use-psp
+rules:
+- apiGroup: ["policy"]
+  verb: ["use"]
+  resources: ["podsecuritypolicies"]
+resourceNames:
+- my-psp
+```
