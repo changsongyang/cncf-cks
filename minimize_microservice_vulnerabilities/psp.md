@@ -13,6 +13,14 @@
 
 Primary need for PSP is to prevent running insecure and misconfigured Pod in the cluster, as that can put cluster or other workloads at risk.
 
-## What is a policy?
+## Using Pod Security Policy
 
-## How does PSP work?
+>[!IMPORTANT]
+>To use PSP, first enable admission controller in kube-apiserver by updating following flag:
+>
+> --enable-admission-plugins=PodSecurityPolicy,...
+>
+
+>[!CAUTION]
+>Pod must satisfy atleast one PSP in order to be allowed. Otherwise, no Pods will be allowed to run.
+>
