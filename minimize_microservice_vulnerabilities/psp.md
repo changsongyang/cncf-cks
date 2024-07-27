@@ -25,6 +25,8 @@ Primary need for PSP is to prevent running insecure and misconfigured Pod in the
 >Pod must satisfy atleast one PSP in order to be allowed. Otherwise, no Pods will be allowed to run.
 >
 
+### Create a policy
+
 ```yaml
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
@@ -36,13 +38,18 @@ spec:
     rule: RunAsAny
 ```
 
-Additional, a user must be authorized to use Pod Security Policy via RBAC.
+### Authorize use of policy
+
+For a user to use a policy to validate their Pods, the user must be authorized to use the policy via RBAC.
+
+>[!IMPORTANT]
+>If a user is not authorized to use any policy, they CANNOT CREATE POD.
 
 ```yaml
 apiVersion:
 kind: ClusterRole
 metadata:
-  name: use-psp
+  name: cr-use-my-psp
 rules:
 - apiGroup: ["policy"]
   verb: ["use"]
