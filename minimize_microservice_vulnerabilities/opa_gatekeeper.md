@@ -2,6 +2,8 @@
 
 # OPA Gatekeeper
 
+## What is OPA Gatekeeper?
+
 In Kubernetes, [Admission Controllers](http://test) enforce policies on objects during create, update, delete operations. **Admission controller** is fundamental to policy enforcement in Kubernetes.
 
 **OPA** is a general-purpose policy engine and **OPA Gatekeeper** is a CNCF graduated project that integrates OPA and Kubernetes, and adds the following on top of plain OPA:
