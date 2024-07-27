@@ -57,3 +57,6 @@ rules:
 resourceNames:
 - my-psp
 ```
+
+For Pods that are not directly created by user (i.e, Deployment, ReplicaSets, DaemonSets, etc), the **Pods service account** (i.e, default service account) must be authorized use the policy via RBAC.
+
