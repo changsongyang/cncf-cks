@@ -169,7 +169,7 @@ spec:
 status: {}
 ```
 
-```
+```sh
 > kubectl apply -f test-deployment.yaml
 Error from server (Forbidden): error when creating "test-deployment.yaml": admission webhook "validation.gatekeeper.sh" denied the request: [deploy-must-have-contac
 t-label] you must provide labels: {"contact"}
@@ -212,7 +212,7 @@ status: {}
 ```
 
 ```sh
-(orbstack)> kubectl apply -f test-deployment.yaml
+> kubectl apply -f test-deployment.yaml
 deployment.apps/webserver configured
 ```
 
