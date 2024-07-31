@@ -157,7 +157,7 @@ spec:
 status: {}
 ```
 
-## Retrieving Existing Secret Data
+## Retrieving existing Secret data via kubectl
 
 ```
 > kubectl get secret stripe-api-key -o yaml'
@@ -177,6 +177,22 @@ type: Opaque
 abc123def456
 ```
 
+## Retrieving existing Secret data via crictl
+
+```sh
+> crictl inspect POD_ID
+> cat /proc/POD_PROCESS_ID/root/...
+```
+
+## Retrieving existing Secret data via etcd
+
+```sh
+> grep etcd /etc/kubernetes/manifest/kube-apiserver.yaml
+
+> ETCDCTL_API=3 etcdctl <flags> get /registry/secrets/default/stripe-api-key
+```
+
+## Encrypt Secrets in ETCD at rest
 
 ## References
 - https://kubernetes.io/docs/concepts/configuration/secret/
