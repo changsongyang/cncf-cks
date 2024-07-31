@@ -25,15 +25,14 @@ type: <TYPE>
 
 | Built-in | Type	Usage |
 | - | - |
-| Opaque | 	arbitrary user-defined data|
+| Opaque | 	arbitrary user-defined data |
 | kubernetes.io/service-account-token |	ServiceAccount token
-| kubernetes.io/dockercfg	serialized | ~/.dockercfg file
+| kubernetes.io/dockercfg	| serialized ~/.dockercfg file
 | kubernetes.io/dockerconfigjson |	serialized ~/.docker/config.json file
 | kubernetes.io/basic-auth |	credentials for basic authentication
 kubernetes.io/ssh-auth	| credentials for SSH authentication
 kubernetes.io/tls	| data for a TLS client or server
 bootstrap.kubernetes.io/token |	bootstrap token data
-
 
 ## Create a pod to play around
 
@@ -66,7 +65,7 @@ status: {}
 ## Using Secrets as environment variables
 
 You can consume the data in Secrets as environment variable in your container.
-- For each container, add an environment variable for each Secret key you want to use, e.g: `env[].valueFrom.secretKeyRef`
+- For each container, add an environment variable for each Secret key you want to use, e.g: `containers[].env[].valueFrom.secretKeyRef`
 
 ```sh
 > kubectl create secret generic stripe-api-key --from-literal=api-key=abc123def456
@@ -117,6 +116,46 @@ STRIPE_API_KEY=abc123def456
 >
 
 ## Using Secrets as volume
+
+You can also consume the data in Secrets as mounted volume in your container, where each top-level key will appear as file.
+- In a pod, add volumes with name of the Secret, e.g: `volumes[].secret.secretName`
+- For each container, add volume mounts for the volume and mountPath, e.g: `containers[].volumeMounts.[name|mountPath]`
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: test
+  name: test
+spec:
+  volumes:
+  - name: stripe-api-key
+    secret:
+      secretName: stripe-api-key
+  containers:
+  - command:
+    - sh
+    - -c
+    - sleep 3600
+    image: busybox
+    name: test
+    volumeMounts:
+    - name: stripe-api-key
+      mountPath: /etc/stripe-api-key
+      readOnly: true
+    env:
+    - name: STRIPE_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: stripe-api-key
+          key: api-key
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
 
 ## Retrieving Existing Secret Data
 
