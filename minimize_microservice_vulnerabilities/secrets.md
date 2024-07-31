@@ -159,4 +159,25 @@ status: {}
 
 ## Retrieving Existing Secret Data
 
-## Exam Tip
+```
+> kubectl get secret stripe-api-key -o yaml'
+apiVersion: v1
+data:
+ api-key: YWJjMTIzZGVmNDU2
+kind: Secret
+metadata:
+  creationTimestamp: "2024-07-28T08:14:44Z"
+  name: stripe-api-key
+  namespace: default
+  resourceVersion: "4781"
+  uid: 2a8a7892-39d1-4ba0-bfb2-7199744a528d
+type: Opaque
+
+> kubectl get secret stripe-api-key -o yaml | yq '.data.api-key | @base64d'
+abc123def456
+```
+
+
+## References
+- https://kubernetes.io/docs/concepts/configuration/secret/
+
