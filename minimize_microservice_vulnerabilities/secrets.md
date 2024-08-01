@@ -262,6 +262,8 @@ volumes:
 After restarting `kube-apiserver`, any newly created or updated Secret (or any other resource kinds configured in `EncryptionConfiguration`) should be encrypted when written to etcd.
 
 ```sh
+> sudo apt install etcd-client
+
 > grep etcd /etc/kubernetes/manifest/kube-apiserver.yaml
 
 > ETCDCTL_API=3 etcdctl get /registry/secrets/default/stripe-api-key [...] | hexdump -C
