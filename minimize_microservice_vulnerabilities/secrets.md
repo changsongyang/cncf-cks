@@ -208,24 +208,30 @@ abc123def456
 ### Generate the encryption key
 
 ```sh
-head -c 32 /dev/urandom | base64
+> head -c 32 /dev/urandom | base64
+wxbsMJqCCfuyu6tP3fCgdLvL4zZ9fttl+6pghk1wvRM=
 ```
 **NOTE:** Replicate the encryption key to every other control plane node. At a minimum, use encyption in trasit, e.g: secure shell (SSH).
 
 ### Write encryption configuration file
 
 ```yaml
+---
 apiVersion: apiserver.config.k8s.io/v1
 kind: EncryptionConfiguration
 resources:
-- resources:
-  - secrets
-  providers:
-  - aescbc:
-      keys:
-      - name: key1
-        secret: wxbsMJqCCfuyu6tP3fCgdLvL4zZ9fttl+6pghk1wvRM=
-  - identity: {} # fallback allows reading unencypted secret during initial migration 
+  - resources:
+      - secrets
+      - configmaps
+      - pandas.awesome.bears.example
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              # See the following text for more details about the secret value
+              secret: <BASE 64 ENCODED SECRET>
+      - identity: {} # this fallback allows reading unencrypted secrets;
+                     # for example, during initial migration
 ```
 
 ### Use the encyption configuration file
