@@ -322,6 +322,17 @@ resources:
 ```
 
 ```sh
+# Restart API server static pod
+> crictl pods
+POD ID              CREATED              STATE               NAME                               NAMESPACE           ATTEMPT             RUNTIME
+e9380c9b5738e       About a minute ago   Ready               kube-apiserver-k8s-0               kube-system         0                   (default)
+
+> crictl rmp -f e9380c9b5738e
+Stopped sandbox e9380c9b5738e
+Removed sandbox e9380c9b5738e
+```
+
+```sh
 > kubectl get secrets -A -o json | kubectl replace -f -
 ```
 
