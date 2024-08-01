@@ -245,12 +245,16 @@ First, we need to mount the encyption config file `kube-apiserver` static pod.
 volumeMounts:
 - name: enc
   mountPath: /etc/kubernetes/enc
-  readOnly true
+  readOnly: true
 volumes:
 - name: enc
   hostPath:
     path: /etc/kubernetes/enc
     type: DirectoryOrCreate
+```
+
+```sh
+> crictl ps --name kube-apiserver
 ```
 
 ### Verify newly written data is encrypted
