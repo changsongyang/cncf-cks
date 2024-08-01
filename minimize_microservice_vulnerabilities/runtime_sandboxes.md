@@ -13,6 +13,10 @@
 - Kata containers
 - Firecrackers - Developed by AWS.
 
+## Use cases
+- Running untrusted workloads
+- Multi-tenant environments 
+
 ## gVisor/runsc
 
 ## Kata containers
