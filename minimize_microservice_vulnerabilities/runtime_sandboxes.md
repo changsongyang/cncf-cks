@@ -9,10 +9,6 @@
 
 **A container runtime sandboxes** is responsible for running container on a host system **with additional isolation and security features.**
 
-The default container runtime is containerd
-
-Runtime sandboxes helps secure container from taking over host machine.
-
 ## gVisor/runsc
 
 ## Kata containers
