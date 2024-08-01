@@ -160,7 +160,7 @@ status: {}
 ## Retrieving existing Secret data via kubectl
 
 ```
-> kubectl get secret stripe-api-key -o yaml'
+> kubectl get secret stripe-api-key -o yaml
 apiVersion: v1
 data:
  api-key: YWJjMTIzZGVmNDU2
@@ -184,16 +184,135 @@ abc123def456
 > cat /proc/POD_PROCESS_ID/root/...
 ```
 
-## Retrieving existing Secret data via etcd
+## Encrypt Secrets in ETCD at rest
+
+- By default, the API server stores plain-text representations of resources into etcd, with no at-rest encryption.
+
+>[!Tip]
+>If `kube-apiserver` is running without `--encryption-provider-config` flag then you do not have encryption at rest is enabled.
+>```
+>$ grep encryption-provider-config /etc/kubernetes/manifests/kube-apiserver.yaml || echo NO;
+>```
+
+>[!Tip]
+>If `kube-apiserver` is running with `--encryption-provider-config` flag and configuration file have `identity` provider as first encyption provider then you do not have encryption at rest is enabled.
+
+### Available providers
+
+[See here](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#providers)
+
+### Key storage
+- Local key storage
+- Managed (KMS) key storage
+
+### Generate the encryption key
+
+```sh
+head -c 32 /dev/urandom | base64
+```
+**NOTE:** Replicate the encryption key to every other control plane node. At a minimum, use encyption in trasit, e.g: secure shell (SSH).
+
+### Write encryption configuration file
+
+```yaml
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+- resources:
+  - secrets
+  providers:
+  - aescbc:
+      keys:
+      - name: key1
+        secret: wxbsMJqCCfuyu6tP3fCgdLvL4zZ9fttl+6pghk1wvRM=
+  - identity: {} # fallback allows reading unencypted secret during initial migration 
+```
+
+### Use the encyption configuration file
+
+First, we need to mount the encyption config file `kube-apiserver` static pod.
+
+```sh
+> touch /etc/kubernetes/enc/enc.yaml
+> vim /etc/kubernetes/manifests/kube-apiserver.yaml
+- encyption-provider-config=/etc/kubernetes/enc/enc.yaml
+volumeMounts:
+- name: enc
+  mountPath: /etc/kubernetes/enc
+  readOnly true
+volumes:
+- name: enc
+  hostPath:
+    path: /etc/kubernetes/enc
+    type: DirectoryOrCreate
+```
+
+### Verify newly written data is encrypted
+
+After restarting `kube-apiserver`, any newly created or updated Secret (or any other resource kinds configured in `EncryptionConfiguration`) should be encrypted when written to etcd.
 
 ```sh
 > grep etcd /etc/kubernetes/manifest/kube-apiserver.yaml
 
-> ETCDCTL_API=3 etcdctl <flags> get /registry/secrets/default/stripe-api-key
+> ETCDCTL_API=3 etcdctl get /registry/secrets/default/stripe-api-key [...] | hexdump -C
+# Secret is prefix with k8s:enc:aescbc:v1:key1
+# [...] must be additional arguments for connect etcd, e.g: --cacert, --cert, --key, etc.
 ```
 
-## Encrypt Secrets in ETCD at rest
+### Verify Secret is decrypted when retrieved via API
+```sh
+> kubectl get secrets stripe-api-key -o yaml -n default | yq '.data.api-key | @base64d'
+```
+
+### Encrypt already stored secrets
+
+The command below reads all Secrets and then updates them with the same data, 
+
+```sh
+> kubectl get secrets -A -o json | kubectl replace -f -
+```
+
+Once all Secrets are encrypted, you can remove the `identity` part of the encryption configuration.
+
+```diff
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              secret: <BASE 64 ENCODED SECRET>
+-      - identity: {} # REMOVE THIS LINE
+```
+
+## Decrypt all data
+
+To disable encryption at rest, place the identity provider as the first entry in your encryption configuration file.
+
+```diff
+---
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+      # list any other resources here that you previously were
+      # encrypting at rest
+    providers:
+      - identity: {} # add this line
+      - aescbc:
+          keys:
+            - name: key1
+              secret: <BASE 64 ENCODED SECRET> # keep this in place make sure it comes after "identity"
+```
+
+```sh
+> kubectl get secrets -A -o json | kubectl replace -f -
+```
 
 ## References
 - https://kubernetes.io/docs/concepts/configuration/secret/
-
+- https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
