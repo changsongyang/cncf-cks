@@ -5,7 +5,6 @@
 **A container runtime** is responsible for **running containers on a host system**.
 - Docker Enginer
 - containerd
-- runc, etc.
 
 ## What is container runtime sandboxes?
 
