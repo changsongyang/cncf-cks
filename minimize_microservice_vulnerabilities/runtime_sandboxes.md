@@ -17,6 +17,9 @@
 - Running untrusted workloads
 - Multi-tenant environments 
 
+>[!IMPORTANT]
+>The extra security of container runtime sandboxes comes with performance trade off.
+
 ## gVisor/runsc
 
 ## Kata containers
