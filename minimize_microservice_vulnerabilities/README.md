@@ -1,4 +1,10 @@
-# Minimize Microservice Vulnerabilities
+# 20% - Minimize Microservice Vulnerabilities
+
+**Exam Curriculum:**
+- Setup appropriate OS level security domains
+- Management Kubernetes secrets
+- Use conatiner runtime sandboxes in multi-tenant environments (e.g: gvisor, kata containers)
+- Implement pod to pod encryption by use of mTLS
 
 | Topic | About |
 |--------|--------|
