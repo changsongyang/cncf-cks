@@ -17,3 +17,7 @@ System Hardening | 15%
 [Minimize Microservice Vulnerabilities](minimize_microservice_vulnerabilities) | 20%
 Supply Chain Security | 20%
 Monitoring, Logging, and Runtime Security |  20%
+
+## Exam Curriculum (v1.30)
+
+[View PDF](https://github.com/cncf/curriculum/blob/master/CKS_Curriculum_%20v1.30.pdf)
