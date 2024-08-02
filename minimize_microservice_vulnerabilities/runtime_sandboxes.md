@@ -34,4 +34,40 @@ Same as Kata container but runs microVms, offering isolated environment for cont
 
 # Hands on
 
-TBA
+## Building a Sandbox
+
+### ✅ Install gVisor runtime
+
+### ✅ Configure containerd to interact with runsc
+
+### ✅ Setup a RuntimeClass to designate which Pod need to run sandboxed runtime
+
+## What is RuntimeClass?
+
+A **RuntimeClass** is a resource that defines runtime configuration for Pods. By defining a `RuntimeClass`, you can select specific runtime features such as container runtime sandbox for certain Pods in `spec.runtimeClassName`.
+
+```sh
+> kubectl api-resources --api-group node.k8s.io
+NAME             SHORTNAMES   APIVERSION       NAMESPACED   KIND
+runtimeclasses                node.k8s.io/v1   false        RuntimeClass
+```
+
+```yaml
+apiVersion: node.k8s.io/v1
+kind: RuntimeClass
+metadata:
+  name: example-runtimeclass          # ✅ `name` is the name used in Pods `spec.runtimeClassName` to apply this RuntimeClass to Pods.
+handler: example-handler              # ✅ `handler` referes to section in `containerd` that configures runsc.
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  runtimeClassName: example-runtimeclass
+  container:
+  - name:
+    image: busybox
+```
