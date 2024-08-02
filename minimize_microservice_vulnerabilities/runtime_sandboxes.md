@@ -91,7 +91,7 @@ pod/sandbox-pod created
 ```
 
 ### Verify the Pod is running in `gVisor` sandbox
-```yaml
+```sh
 > kubectl exec -it sandbox-pod -- dmesg
 [   0.000000] Starting gVisor...
 [   0.103288] Accelerating teletypewriter to 9600 baud...
