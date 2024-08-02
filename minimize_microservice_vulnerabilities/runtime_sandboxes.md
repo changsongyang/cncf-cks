@@ -46,8 +46,6 @@ See https://gvisor.dev/docs/user_guide/install/
 
 See https://gvisor.dev/docs/user_guide/containerd/quick_start/
 
-### ✅ Setup a RuntimeClass to designate which Pod need to run sandboxed runtime
-
 ## What is RuntimeClass?
 
 A **RuntimeClass** is a resource that defines runtime configuration for Pods. By defining a `RuntimeClass`, you can select specific runtime features such as container runtime sandbox for certain Pods in `spec.runtimeClassName`.
