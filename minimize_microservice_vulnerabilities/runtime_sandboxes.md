@@ -24,6 +24,8 @@
 
 `gVisor/runsc` provides isolation by intercepting system calls made by containers and implements them in user-space, reducuing the reliance on host's kernel.
 
+<img src='https://github.com/user-attachments/assets/a211e1d5-17a5-45ae-a329-462771881b79' height=250 />
+
 ## Kata containers
 
 `Kata container` uses lightweight VMs to run containers, combining the isolation of VM and speed/flexibility of containers.
