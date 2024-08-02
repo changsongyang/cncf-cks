@@ -38,11 +38,13 @@ Same as Kata container but runs microVms, offering isolated environment for cont
 
 ## Building a Sandbox
 
-### ✅ Install gVisor runtime
+### ✅ Install gVisor runtime on control plane + worker nodes
 
-- https://gvisor.dev/docs/user_guide/install/
+See https://gvisor.dev/docs/user_guide/install/
 
 ### ✅ Configure containerd to interact with runsc
+
+See https://gvisor.dev/docs/user_guide/containerd/quick_start/
 
 ### ✅ Setup a RuntimeClass to designate which Pod need to run sandboxed runtime
 
