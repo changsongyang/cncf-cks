@@ -199,3 +199,6 @@ ETag: "66ba1a4d-267"
 Accept-Ranges: bytes
 ```
 
+### 🛠️ Try it yourself
+- Put default deny network policy in `db` namespace, and see how you can get `backend` Pod in `default` namespace to communicate with `database` Pod in `db` namespace.
+
