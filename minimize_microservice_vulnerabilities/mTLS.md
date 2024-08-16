@@ -28,6 +28,7 @@ _Source: [Kubernetes CLS Full Course Theory + Practice + Browser Scnearios [YouT
 - App container doesn't need to be changed and can just accept HTTP
 - mTLS is extracted and managed externally (server mesh like istio, linkerd)
 
+Fun fact: Proxy side car container ais is actually going ethical MiTM :P 
 
 ## Certificate signing
 
