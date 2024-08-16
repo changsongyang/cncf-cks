@@ -11,6 +11,10 @@ Probably, seen HTTPS where server is certificate, but with mTLS both client and 
 
 mTLS is away to preventing anyone from impersonating client or server and listening on Pods to Pods traffics.
 
+## mTLS protects against MiTM attacks
+![image](https://github.com/user-attachments/assets/bb5e0abd-cb0b-476c-9dc3-58ee4353bdad)
+_Source: [Kubernetes CLS Full Course Theory + Practice + Browser Scnearios [YouTube]](https://youtu.be/d9xfB5qaOfg)_
+
 
 ## Certificate signing
 
@@ -126,4 +130,9 @@ kubectl get csr my-csr -o jsonpath='{.status.certificate}' | base64 -d
 Tips:
 - Create CSR iojbect ot request a new certificate
 - Management/ approve or deny request via `kubectl certificate`
-- Signed certiifcate can be objtained from `status.certificate` field, and is base64 encoded.
+- Signed certiifcate can be objtained from `status.certificate` field, and is base64 encoded
+-
+
+## Resources
+
+- https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster
