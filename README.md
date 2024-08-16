@@ -2,7 +2,7 @@
 	<img src="assets/cks_logo.webp">
 </div>
 
-<h1 align="center">CNCF - Certified Kubernetes Security Specialist (CKS) Notes/h1>
+<h1 align="center">CNCF - Certified Kubernetes Security Specialist (CKS) Notes</h1>
 
 ## About
 
