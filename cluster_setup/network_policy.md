@@ -60,7 +60,7 @@ spec:
       protocol: UDP
 ```
 
-```
+```sh
 k apply -f default-deny-netpol.yaml
 k get netpol
 ```
@@ -68,7 +68,7 @@ k get netpol
 
 #### 🔗 Check network conectivity from `frontend` to `backend` Pod.
 
-```
+```sh
 > k exec frontend -- curl backend
 
 % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
