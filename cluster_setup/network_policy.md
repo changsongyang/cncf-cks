@@ -13,26 +13,37 @@
 
 ## 🎯 Scenario
 
-#### ➕ Create 2 Pods, frontend and backend.
+#### ➕ Create 2 Pods, frontend and backend in default namespace.
 
 ```sh
 k run frontend --image nginx
 k run backend --image nginx
 ```
 
-#### ➕ Create service for frontend and backend to enable network communication.
+#### ➕ Create 1 Pod, database in db namespace.
+
+```sh
+k create ns db
+k label ns/db ns=db
+k run database --image nginx -n db
+```
+
+#### ➕ Create service for frontend, backend and database Pod to enable network communication.
 
 ```sh
 k expose pod/frontend --port 80
 k expose pod/backend --port 80
+k expose pod/database --port 80 -n db
 k get pod,svc
+k get pod,svc -n db
 ```
 
 #### 🟢 Check network connectivity between them.
 
 ```sh
-k exec frontend -- curl backend --head -s
-k exec backend -- curl frontend --head -s
+k exec frontend -- curl backend
+k exec backend -- curl frontend
+k exec backend -- curl database
 ```
 
 
@@ -91,14 +102,14 @@ metadata:
 spec:
  podSelector:
    matchLabels:
-    run: frontend
+    run: backend
  policyTypes:
  - Egress
  egress:
  - to:
-   - podSelector:
+   - namespaceSelector:
       matchLabels:
-       run: backend
+       ns: database
 ```
 
 ```sh
@@ -146,4 +157,45 @@ Accept-Ranges: bytes
 ```
 
 
- 
+## 🟢 Allow `backend` Pod to communicate with `database` Pod across namespace
+
+#### ➕ Create outbound (egress) network policy from `backend` to `database` Pod.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-b2d-egress
+  namespace: default
+spec:
+ podSelector:
+   matchLabels:
+    run: backend
+ policyTypes:
+ - Egress
+ egress:
+ - to:
+   - namespaceSelector:
+      matchLabels:
+       ns: db
+```
+
+```sh
+k apply -f allow-b2d-egress-netpol.yaml
+```
+
+#### 🔗 Check network connectivity from `backend` to `database` Pod across namespace.
+
+```sh
+> k exec backend -- curl --head -s database.db
+HTTP/1.1 200 OK
+Server: nginx/1.27.1
+Date: Fri, 16 Aug 2024 20:02:00 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Mon, 12 Aug 2024 14:21:01 GMT
+Connection: keep-alive
+ETag: "66ba1a4d-267"
+Accept-Ranges: bytes
+```
+
