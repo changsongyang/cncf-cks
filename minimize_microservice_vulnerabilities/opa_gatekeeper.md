@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/bc2f5cee-c66b-4cd1-8932-82661dbe1782)
-
 # OPA Gatekeeper
 
 ## What is OPA Gatekeeper?
