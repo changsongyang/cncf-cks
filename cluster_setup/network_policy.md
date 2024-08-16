@@ -66,7 +66,7 @@ k get netpol
 ```
 
 
-#### Check network conectivity
+#### Check network conectivity from `frontend` to `backend` Pod.
 
 ```
 $ k exec frontend -- curl backend
@@ -130,7 +130,7 @@ spec:
 k apply -f allow-b2f-ingress-netpol.yaml
 ```
 
-#### Check network connectivity between them.
+#### Check network connectivity from `frontend` to `backend` Pod.
 
 ```sh
 k exec frontend -- curl backend --head -s
