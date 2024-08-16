@@ -15,6 +15,9 @@ mTLS is away to preventing anyone from impersonating client or server and listen
 ![image](https://github.com/user-attachments/assets/bb5e0abd-cb0b-476c-9dc3-58ee4353bdad)
 _Source: [Kubernetes CLS Full Course Theory + Practice + Browser Scnearios [YouTube]](https://youtu.be/d9xfB5qaOfg)_
 
+## Certificates Everywhere (How can we easily manage them?)
+![image](https://github.com/user-attachments/assets/90a6bd7d-588e-4a22-9bac-7cbd8d1948f7)
+
 
 ## Certificate signing
 
