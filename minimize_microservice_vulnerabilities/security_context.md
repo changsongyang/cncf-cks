@@ -16,13 +16,14 @@ spec:
 + securityContext:
 +   runAsUser: 1000
 +   # more settings as key:value pair
+
+# Container-level: Only applies to this container (pod-level override)
   containers:
   - name: nginx
     image: nginx
-# Container-level: Only applies to this container (pod-level override)
-+ securityContext:
-+   runAsUser: 2000
-+   # more settings as key:value pair
++   securityContext:
++     runAsUser: 2000
++     # more settings as key:value pair
 ```
 
 > [!NOTE]
