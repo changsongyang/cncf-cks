@@ -15,14 +15,14 @@
 
 ## Scenario
 
-Create 2 Pods, frontend and backend.
+#### Create 2 Pods, frontend and backend.
 
 ```sh
 k run frontend --image nginx
 k run backend --image nginx
 ```
 
-Create service for frontend and backend to enable network communication.
+#### Create service for frontend and backend to enable network communication.
 
 ```sh
 k expose pod/frontend --port 80
@@ -30,7 +30,7 @@ k expose pod/backend --port 80
 k get pod,svc
 ```
 
-Check network connectivity between them.
+#### Check network connectivity between them.
 
 ```sh
 k exec frontend -- curl backend --head -s
@@ -66,7 +66,7 @@ k get netpol
 ```
 
 
-Check network conectivity
+#### Check network conectivity
 
 ```
 $ k exec frontend -- curl backend
@@ -80,7 +80,7 @@ command terminated with exit code 6
 
 ## Allow `frontend` Pod to communicate with `backend` Pod
 
-### Create outbound (egress) network policy from `frontend` to `backend` Pod.
+#### Create outbound (egress) network policy from `frontend` to `backend` Pod.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -105,7 +105,7 @@ spec:
 k apply -f allow-f2b-egress-netpol.yaml
 ```
 
-### Create inbound (ingress) policy to `backend` from `frontend` Pod.
+#### Create inbound (ingress) policy to `backend` from `frontend` Pod.
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -130,7 +130,7 @@ spec:
 k apply -f allow-b2f-ingress-netpol.yaml
 ```
 
-### Check network connectivity between them.
+#### Check network connectivity between them.
 
 ```sh
 k exec frontend -- curl backend --head -s
