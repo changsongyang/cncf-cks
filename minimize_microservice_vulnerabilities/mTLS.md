@@ -18,6 +18,16 @@ _Source: [Kubernetes CLS Full Course Theory + Practice + Browser Scnearios [YouT
 ## Certificates Everywhere (How can we easily manage them?)
 ![image](https://github.com/user-attachments/assets/90a6bd7d-588e-4a22-9bac-7cbd8d1948f7)
 
+### Solution A - ServiceMesh / Sidecar Proxy
+
+![image](https://github.com/user-attachments/assets/48c79853-1044-4bba-9fef-b3d45a6f0155)
+
+- Proxy sidecar container
+- App container is not going directly, proxy sidecar communicate with other sidecar container.
+- Proxy sidecar sends decrypted traffic to app container
+- App container doesn't need to be changed and can just accept HTTP
+- mTLS is extracted and managed externally (server mesh like istio, linkerd)
+
 
 ## Certificate signing
 
