@@ -1,86 +1,43 @@
 # Mutual TLS (mTLS)
 
-## Intropduction
-- Lots of micro services
-- Lots of pods communicate with each other
-- Maybem attacker can listen on Pods.
+## Introduction
 
 mTLS means both communication fully auth each other.
 
-Probably, seen HTTPS where server is certificate, but with mTLS both client and server have certificate, both parties have a certificate, and prevents anyone from listen in, either client or server.
+Probably, seen HTTPS where server have certificate, but with mTLS both both parties (client & serveR) have a certificate, which prevents anyone from listen in, either client or server.
 
-mTLS is away to preventing anyone from impersonating client or server and listening on Pods to Pods traffics.
-
-## mTLS protects against MiTM attacks
-![image](https://github.com/user-attachments/assets/bb5e0abd-cb0b-476c-9dc3-58ee4353bdad)
-_Source: [Kubernetes CLS Full Course Theory + Practice + Browser Scnearios [YouTube]](https://youtu.be/d9xfB5qaOfg)_
-
-## Certificates Everywhere (How can we easily manage them?)
-![image](https://github.com/user-attachments/assets/90a6bd7d-588e-4a22-9bac-7cbd8d1948f7)
-
-### Solution A - ServiceMesh / Sidecar Proxy
-
-![image](https://github.com/user-attachments/assets/48c79853-1044-4bba-9fef-b3d45a6f0155)
-
-- Proxy sidecar container
-- App container is not going directly, proxy sidecar communicate with other sidecar container.
-- Proxy sidecar sends decrypted traffic to app container
-- App container doesn't need to be changed and can just accept HTTP
-- mTLS is extracted and managed externally (server mesh like istio, linkerd)
-
-Fun fact: Proxy side car container ais is actually going ethical MiTM :P 
+mTLS is away to preventing anyone from impersonating client or server and listening on Pod to Pod network traffic.
 
 ## Certificate signing
 
-If all Pods need server and client certificates, the there will be lots of certificates with ltos of muicroservices, and we need automated solution to manage that.
+If all Pods needs server and client certificates, then there will be lots of certificates to manage depeneding on size of microservice application.
 
-Feature of Certificate signing of Kubernetes allows objtaining certificates.
+Kubernetes API allows signing and obtaining certificates via CSR resource.
 
-1. Kubernmetes API - allows to obtain certiifcates
-2. CA - Certiricates will be grnerated form central root CA.
-3. Progammatic certificate access
+## Process of Signing certificates via Kubernetes API
 
-
-## Processo f Signing certificates via Kubernetes API
-
-### Requesting and Signing Certificates
-
-1. First, requestor create CSR object to request a new certificate.
-2. CSR can be approved or denied.
-3. RBAC can control who can approve CSR. 
-
+1. Requestor creates CSR object to request a new certificate.
+2. Signer approve or deny CSR request via `kubectl certificate approve/deny`.
+3. Requestor obtains the signed certificate from CSR object `status.certificate` field, certificate is base64 encoded.
 
 ### Hands on-demo
 
-### REauestin certificate
-
-Creating CSR is standard process, and is not related to kubernetes.
+#### 1. Creating CSR is standard process, and is not related to kubernetes.
 
 ```sh
 apt-install install golang-cfssl
-```
 
-
-Generate CSR.
-
-```
 # CSR generated.
 # ls
 server.csr     # <-- CSR
 server-key.pem # <-- server side key
 ```
 
-###  Signing Certiicate
+#### 1.1. Create CSR object with base64 encoded data of above CSR
 
-Frist, base64 encode the CSR file
 ```
 $ cat server.csr | base64
 LS0.....RJ
-```
-
-Create CSR object
-```
-$ vi csr.yaml
 ```
 
 ```yaml
@@ -100,9 +57,7 @@ spec:
   - digital signature
   - key encipherment
   - server auth
-
 ```
-
 
 ```
 kubectl create 0f csr.yaml
@@ -115,7 +70,7 @@ NAME    ... REQUESTOR        CONDITION
 my-csr  ... kubernetes-admin Pending
 ```
 
-Approve CSR
+#### 2. Approve CSR request
 
 ```
 $ kubectl certificate approve my-csr
@@ -128,7 +83,7 @@ NAME    ... REQUESTOR        CONDITION
 my-csr  ... kubernetes-admin Approved,Issued
 ```
 
-Obtaining signed certificate
+#### 3. Obtaining signed certificate
 
 ```
 kubectl get csr my-csr -o yaml
@@ -140,12 +95,6 @@ status:
 ```
 kubectl get csr my-csr -o jsonpath='{.status.certificate}' | base64 -d 
 ```
-
-Tips:
-- Create CSR iojbect ot request a new certificate
-- Management/ approve or deny request via `kubectl certificate`
-- Signed certiifcate can be objtained from `status.certificate` field, and is base64 encoded
--
 
 ## Resources
 
