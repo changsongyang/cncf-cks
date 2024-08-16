@@ -1,4 +1,4 @@
-# Network Policy
+# 🔐 Network Policy
 
 - Network policy is a firewall rule in Kubernetes.
 - Network policy is implemeneted by network plugin CNI (Cilium, Calico, etc). [See full list](https://landscape.cncf.io/?view-mode=card&classify=category&sort-by=name&sort-direction=asc#runtime--cloud-native-network)
@@ -9,9 +9,9 @@
 - By default, in Kubernetes every Pod can communicate with every other Pod.
 - Pods are not isolated network wise.
 
-# Hands-on
+# ✋ Hands-on
 
-## Scenario
+## 🎯 Scenario
 
 #### Create 2 Pods, frontend and backend.
 
@@ -36,7 +36,7 @@ k exec backend -- curl frontend --head -s
 ```
 
 
-## Default deny network policy (except DNS)
+## 🛑 Default deny network policy (except DNS)
  
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -64,7 +64,7 @@ k get netpol
 ```
 
 
-#### Check network conectivity from `frontend` to `backend` Pod.
+#### 🔗 Check network conectivity from `frontend` to `backend` Pod.
 
 ```
 $ k exec frontend -- curl backend
@@ -76,7 +76,7 @@ command terminated with exit code 6
 
 ```
 
-## Allow `frontend` Pod to communicate with `backend` Pod
+## 🟢 Allow `frontend` Pod to communicate with `backend` Pod
 
 #### Create outbound (egress) network policy from `frontend` to `backend` Pod.
 
@@ -128,7 +128,7 @@ spec:
 k apply -f allow-b2f-ingress-netpol.yaml
 ```
 
-#### Check network connectivity from `frontend` to `backend` Pod.
+#### 🔗 Check network connectivity from `frontend` to `backend` Pod.
 
 ```sh
 k exec frontend -- curl backend --head -s
