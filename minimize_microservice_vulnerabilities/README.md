@@ -13,4 +13,4 @@
 | [OPA Gatekeeper](opa_gatekeeper.md) | Learn to **enforce custom security policies on any object** with OPA gatekeeper. |
 | [Secrets](secrets.md) | Learn about how to **store sensitive data** with Secrets. |
 | [Runtime sanboxes](runtime_sandboxes.md) | Learn about **setting up and using container runtime sanboxes** for additional security around untrusted workloads. | 
-| mTLS and Certificates | Learn about **Pod-to-Pod (inter Pod) mTLS and certificate management via Kuibernetes API** | 
+| mTLS | Learn about implementing **Pod-to-Pod (inter Pod) encryption using mTLS** | 
