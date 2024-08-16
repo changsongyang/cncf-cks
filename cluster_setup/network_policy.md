@@ -134,6 +134,15 @@ k apply -f allow-b2f-ingress-netpol.yaml
 
 ```sh
 k exec frontend -- curl backend --head -s
+HTTP/1.1 200 OK
+Server: nginx/1.27.1
+Date: Fri, 16 Aug 2024 19:30:03 GMT
+Content-Type: text/html
+Content-Length: 615
+Last-Modified: Mon, 12 Aug 2024 14:21:01 GMT
+Connection: keep-alive
+ETag: "66ba1a4d-267"
+Accept-Ranges: bytes
 ```
 
 
