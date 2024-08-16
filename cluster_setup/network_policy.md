@@ -37,7 +37,9 @@ k exec backend -- curl frontend --head -s
 
 
 ## 🛑 Default deny network policy (except DNS)
- 
+
+➕ Create default network policy to deny `ingress` and `egress` traffic except DNS from `default` namespace.
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
