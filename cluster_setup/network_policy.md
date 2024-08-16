@@ -133,7 +133,7 @@ k apply -f allow-b2f-ingress-netpol.yaml
 #### 🔗 Check network connectivity from `frontend` to `backend` Pod.
 
 ```sh
-k exec frontend -- curl backend --head -s
+> k exec frontend -- curl backend --head -s
 HTTP/1.1 200 OK
 Server: nginx/1.27.1
 Date: Fri, 16 Aug 2024 19:30:03 GMT
