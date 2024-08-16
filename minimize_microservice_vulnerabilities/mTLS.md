@@ -1,89 +1,42 @@
 # Mutual TLS (mTLS)
 
-## Intropduction
-- Lots of micro services
-- Lots of pods communicate with each other
-- Maybem attacker can listen on Pods.
+## Introduction
+- Running microservices application in Kubernetes involves many pods communicating with each other on different nodes.
+- An attacker might be able to listen in on these pod communications.
 
-mTLS means both communication fully auth each other.
+mTLS ensures that both parties in the communication are fully authenticated and traffic is encrypted. Unlike HTTPS, where only the server is authenticated with a certificate, mTLS requires both the client and the server to present certificates, preventing eavesdropping and impersonation.
 
-Probably, seen HTTPS where server is certificate, but with mTLS both client and server have certificate, both parties have a certificate, and prevents anyone from listen in, either client or server.
-
-mTLS is away to preventing anyone from impersonating client or server and listening on Pods to Pods traffics.
-
-## mTLS protects against MiTM attacks
+## mTLS Protects Against MiTM Attacks
 ![image](https://github.com/user-attachments/assets/bb5e0abd-cb0b-476c-9dc3-58ee4353bdad)
-_Source: [Kubernetes CLS Full Course Theory + Practice + Browser Scnearios [YouTube]](https://youtu.be/d9xfB5qaOfg)_
+_Source: [Kubernetes CLS Full Course Theory + Practice + Browser Scenarios [YouTube]](https://youtu.be/d9xfB5qaOfg)_
 
-## Certificates Everywhere (How can we easily manage them?)
+## Certificates Everywhere (How Can We Easily Manage Them?)
 ![image](https://github.com/user-attachments/assets/90a6bd7d-588e-4a22-9bac-7cbd8d1948f7)
 
 ### Solution A - ServiceMesh / Sidecar Proxy
-
 ![image](https://github.com/user-attachments/assets/48c79853-1044-4bba-9fef-b3d45a6f0155)
 
-- Proxy sidecar container
-- App container is not going directly, proxy sidecar communicate with other sidecar container.
-- Proxy sidecar sends decrypted traffic to app container
-- App container doesn't need to be changed and can just accept HTTP
-- mTLS is extracted and managed externally (server mesh like istio, linkerd)
+- A proxy sidecar container handles communication.
+- The application container doesn't directly communicate with other pods; the proxy sidecar manages this.
+- The proxy sidecar sends decrypted traffic to the application container.
+- The application container doesn't need to change and can continue to use HTTP.
+- mTLS is managed externally by a service mesh like Istio or Linkerd.
 
-Fun fact: Proxy side car container ais is actually going ethical MiTM :P 
+Fun fact: The proxy sidecar container is actually performing an ethical MiTM :P 
 
-## Certificate signing
+## Certificate Signing
+If every pod needs both server and client certificates, the sheer number of certificates across numerous microservices requires an automated management solution. Kubernetes provides a feature for certificate signing to facilitate this.
 
-If all Pods need server and client certificates, the there will be lots of certificates with ltos of muicroservices, and we need automated solution to manage that.
+1. Kubernetes API allows the automated acquisition of certificates.
+2. Certificates are generated from a central root CA.
+3. Programmatic certificate access is enabled.
 
-Feature of Certificate signing of Kubernetes allows objtaining certificates.
-
-1. Kubernmetes API - allows to obtain certiifcates
-2. CA - Certiricates will be grnerated form central root CA.
-3. Progammatic certificate access
-
-
-## Processo f Signing certificates via Kubernetes API
+## Process of Signing Certificates via Kubernetes API
 
 ### Requesting and Signing Certificates
 
-1. First, requestor create CSR object to request a new certificate.
-2. CSR can be approved or denied.
-3. RBAC can control who can approve CSR. 
-
-
-### Hands on-demo
-
-### REauestin certificate
-
-Creating CSR is standard process, and is not related to kubernetes.
-
-```sh
-apt-install install golang-cfssl
+1. The requestor creates a CSR (Certificate Signing Request) object to request a new certificate with CSR data encoded as base64.
 ```
-
-
-Generate CSR.
-
-```
-# CSR generated.
-# ls
-server.csr     # <-- CSR
-server-key.pem # <-- server side key
-```
-
-###  Signing Certiicate
-
-Frist, base64 encode the CSR file
-```
-$ cat server.csr | base64
-LS0.....RJ
-```
-
-Create CSR object
-```
-$ vi csr.yaml
-```
-
-```yaml
 apiVersion: ..
 kind: CertificateSigningRequest
 metadata:
@@ -100,53 +53,53 @@ spec:
   - digital signature
   - key encipherment
   - server auth
-
 ```
 
-
-```
-kubectl create 0f csr.yaml
+```sh
+$ kubectl create -f csr.yaml
 ... created
 ```
 
-```
-$ kubectl get csr
-NAME    ... REQUESTOR        CONDITION
-my-csr  ... kubernetes-admin Pending
-```
-
-Approve CSR
+2. CSR is approved (RBAC permission needed to approve CSR)
 
 ```
 $ kubectl certificate approve my-csr
 ... approved
-```
 
-```
 $ kubectl get csr
 NAME    ... REQUESTOR        CONDITION
 my-csr  ... kubernetes-admin Approved,Issued
 ```
 
-Obtaining signed certificate
+3. Obtain the certificate
 
 ```
-kubectl get csr my-csr -o yaml
+$ kubectl get csr my-csr -o yaml
 ...
 status:
   certificate: LS0...Cg== # <-- base64 encoded certificate data
-```
+
+$ kubectl get csr my-csr -o jsonpath='{.status.certificate}' | base64 -d 
 
 ```
-kubectl get csr my-csr -o jsonpath='{.status.certificate}' | base64 -d 
+
+### Hands-on Demo
+
+#### Requesting a Certificate
+Creating a CSR is a standard process and isn't specific to Kubernetes.
+
+1. Install tool
+```sh
+apt-install install golang-cfssl
 ```
 
-Tips:
-- Create CSR iojbect ot request a new certificate
-- Management/ approve or deny request via `kubectl certificate`
-- Signed certiifcate can be objtained from `status.certificate` field, and is base64 encoded
--
+2. Generate CSR
+```
+# ls
+server.csr     # <-- CSR
+server-key.pem # <-- server-side key
+```
+
 
 ## Resources
-
 - https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster
