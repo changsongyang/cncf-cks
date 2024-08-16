@@ -1,6 +1,4 @@
-# Network Security Policy
-
-# What is Network Policy?
+# Network Policy
 
 - Network policy is a firewall rule in Kubernetes.
 - Network policy is implemeneted by network plugin CNI (Cilium, Calico, etc). [See full list](https://landscape.cncf.io/?view-mode=card&classify=category&sort-by=name&sort-direction=asc#runtime--cloud-native-network)
