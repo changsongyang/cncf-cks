@@ -11,4 +11,4 @@
 
 | Topic | About |
 |--------|--------|
-| [Test](test.md) | Test **something** test. |
+| [Network Security Policies](net_sec_pol.md) | Understand and use **network policy** to restrict cluster level access. |
