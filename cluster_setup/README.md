@@ -11,4 +11,4 @@
 
 | Topic | About |
 |--------|--------|
-| [Network Security Policies](net_sec_pol.md) | Understand and use **network policy** to restrict cluster level access. |
+| [Network Policy](network_policy.md) | Understand and use **network policy** to restrict cluster level access. |
