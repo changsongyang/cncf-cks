@@ -69,13 +69,13 @@ k get netpol
 #### 🔗 Check network conectivity from `frontend` to `backend` Pod.
 
 ```
-$ k exec frontend -- curl backend
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+> k exec frontend -- curl backend
+
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:--  0:00:05 --:--:--     0curl: (6) Could not resolve host: b
 ackend
 command terminated with exit code 6
-
 ```
 
 ## 🟢 Allow `frontend` Pod to communicate with `backend` Pod
