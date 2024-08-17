@@ -16,7 +16,7 @@ Example:
 CIS (stands for **C**enter For **I**nternet **S**ecurity) is a non-profit organization that helps people, businesses and goverments against cyber threats. 
 
 CIS Benchmarks are best practice security configuration for systems, and Kubernetes is one of the supported server software.
-- [View CIS_Kubernetes_Benchmark_v1.9.0](../assets/CIS_Kubernetes_Benchmark_v1.9.0%20PDF.pdf)
+- [CIS_Kubernetes_Benchmark_v1.9.0](../assets/CIS_Kubernetes_Benchmark_v1.9.0%20PDF.pdf)
 
 kube-bench
 
