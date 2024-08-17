@@ -108,14 +108,14 @@ metadata:
 spec:
  podSelector:
    matchLabels:
-    run: backend
+    run: frontend
  policyTypes:
  - Egress
  egress:
  - to:
-   - namespaceSelector:
+   - podSelector:
       matchLabels:
-       ns: database
+       run: backend
 ```
 
 ```sh
