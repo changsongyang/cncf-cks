@@ -12,3 +12,4 @@
 | Topic | About |
 |--------|--------|
 | [Network Policy](network_policy.md) | Understand and use **network policy** to restrict cluster level access. |
+| [CIS Benchmark](cis_benchmark.md) | Use CIS benchmark to review the security configuration |
