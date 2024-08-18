@@ -13,3 +13,4 @@
 |--------|--------|
 | [Network Policy](network_policy.md) | Understand and use **network policy** to restrict cluster level access. |
 | [CIS Benchmark](cis_benchmark.md) | Use CIS benchmark to review the security configuration of Kubernetes components. |
+| [Verify platform binaries](verify_platform_binary.md) | Understand about hashes and verifying binaries for integrity. |
