@@ -2,7 +2,7 @@
 
 **Exam Curriculum:**
 
-- Restrict access to Kubernetes API
+- Restrict access to Kubernetes API.
 
 | Topic | About |
 |--------|--------|
