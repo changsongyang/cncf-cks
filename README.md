@@ -12,7 +12,7 @@ The Certified Kubernetes Security Specialist (CKS) program provides assurance th
 | Domain | Weight |
 | -------|------- |
 [Cluster Setup](cluster_setup) | 10%
-Cluster Hardening | 15%
+[Cluster Hardening](cluster_hardening) | 15%
 System Hardening | 15% 
 [Minimize Microservice Vulnerabilities](minimize_microservice_vulnerabilities) | 20%
 Supply Chain Security | 20%
