@@ -13,7 +13,7 @@
 |--------|--------|
 | [Network Policy](network_policy.md) | Understand and use **network policy** to restrict cluster level access. |
 | [CIS Benchmark](cis_benchmark.md) | Use CIS benchmark to review the security configuration of Kubernetes components. |
-| [Ingress with security controls](ingress_security_controls.md) | Set up Ingress with security control. |
+| [Ingress objects with security controls](ingress_objects_with_security_controls.md) | Set up Ingress objects with security control. |
 | [GUI elements](gui_elements.md) | Learn how to minimize the use of and access to GUI elements. |
 | [Verify platform binaries](verify_platform_binary.md) | Understand hashes and the process of verifying binaries to ensure their integrity. |
   
