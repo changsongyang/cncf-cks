@@ -23,36 +23,37 @@ helm upgrade --install ingress-nginx ingress-nginx \
   --namespace ingress-nginx --create-namespace
 ```
 
-## Setup an Ingress (HTTP) with services
 
-Create a simple web server and associated service
-```
-kubectl create deployment demo --image=httpd --port=80
+# Setup an Ingress (HTTP) with services
 
-kuectl expose deployment/demo
+### Create deployment and service
 ```
+kubectl create deployment app --image=httpd --port=80
 
-Create an ingress resource.
-```
-kubectl create ingress demo-localhost --class=nginx --rule="demo.localdev.me/*=demo:80"
+kuectl expose deployment app
 ```
 
-Access the service via ingress
+### Create an ingress resource
+```
+kubectl create ingress app-ingress --class=nginx --rule="app.me/*=app:80"
+```
+
+### Access the service via ingress
 ```
 # Ingress HTTP node port (30959), e.g: 80:30959/TCP
 kubectl get svc ingress-nginx-controller -n ingress-nginx
 
-curl localhost:30959 --verbose -H 'Host: demo.localdev.me'
+curl http://app.me:30959 --resolve app.me:30959:127.0.0.1
 ```
 
-## Secure an Ingress with TLS
+# Secure an Ingress with TLS
 
 ### Requirements
 
 - Host a website in Kubernetes cluster
 - The website should be reachable on mywebsite.com and protected with HTTPS.
 
-### Create self-signed certificate for mywebsite.com and secret
+### Create self-signed certificate and secret
 
 ```
 openssl req -x509 -out tls.pem -keyout tls.key -newkey rsa:4096 -days 365 -nodes
