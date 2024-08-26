@@ -62,4 +62,29 @@ kubectl auth can-i delete secrets --as jane -n blue
 
 </details>
 
+
+### Scenario 2
+1. Create a ClusterRole `deploy-deleter` which allows to delete deployments
+2. User jane can `delete` deployments in all namespace
+3. User jim can `delete` deployments only in namespace `red`
+5. Test it using `auth can-i`
+
+<details>
+<summary>Solution</summary>
+
+```
+kubectl create clusterrole deploy-deleter --verb delete --resource deployments.apps
+kubectl create clusterrolebinding deploy-deleter --clusterrole deploy-deleter --user jane
+
+kubectl auth can-i delete deployments --as jane # yes
+kubectl auth can-i delete secrets --as jane # no
+
+kubectl create rolebinding deploy-deleter --user jim --clusterrole deploy-deleter --namespace red
+kubectl auth can-i delete deployments --as jim # no
+kubectl auth can-i delete deployments --as jim --namespace red # yes
+```
+
+</details>
+
+
 ## Certificates and Users
